@@ -20,13 +20,18 @@ ul#caption > li {
     display: inline;
 }
 
+ul#caption > li.active {
+    color: red;
+}
+
 ul#caption > li:after {
     content: "-";
-    margin-left: 10px;
+    margin: 0 5px;
+    color: #212529;
 }
 
 ul#caption > li:last-child:after {
-    content: "";
+    content: none;
     margin-left: 10px;
 }
 
