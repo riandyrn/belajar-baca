@@ -6,8 +6,9 @@ html, body, #app {
 }
 
 #mainImg {
+    /* width: auto;
+    max-width: 900px; */
     width: auto;
-    max-width: 900px;
     max-height: 500px;
 }
 

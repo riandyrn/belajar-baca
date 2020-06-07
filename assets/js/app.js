@@ -131,36 +131,40 @@ var app = new Vue({
             // disable button
             setButtonDisabled(true);
             // read caption part by part
-            for (i = 0; i < this.caption.length; i++) {
-                const part = this.caption[i];
-                await this.speakString(
-                    part.text,
-                    function () {
-                        part.active = true;
-                    },
-                    function () {
-                        part.active = false;
-                    }
-                );
+            try {
+                const n = this.caption.length;
+                for (i = 0; i < n; i++) {
+                    const part = this.caption[i];
+                    // console.log("looping!");
+                    part.active = true;
+                    await this.speakString(part.text);
+                    part.active = false;
+                }
+            } catch (e) {
+                alert(e);
             }
             // enable button again
             setButtonDisabled(false);
+            // console.log("reach end of read caption");
         },
-        speakString(str, onStart, onEnd) {
+        speakString(str) {
             return new Promise((resolve, reject) => {
                 if (!str) {
                     reject(new Error("Message must not empty!"));
                     return
                 }
                 var utterThis = new SpeechSynthesisUtterance(str);
-                utterThis.onstart = onStart;
-                utterThis.onend = onEnd;
+                utterThis.onend = function () {
+                    // console.log("onend called!");
+                    resolve();
+                };
+                utterThis.onerror = function (e) {
+                    // console.log("onerror called!");
+                    reject(new Error("Unable to utter speech due: " + e.error));
+                }
                 utterThis.voice = voice;
                 synth.speak(utterThis);
-
-                resolve();
             })
-
         }
     },
     mounted() {
