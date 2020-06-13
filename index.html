@@ -13,22 +13,28 @@
 <body>
     <div id="app" class="container-fluid">
         <div class="row">
-            <div id="contentContainer" class="col-md-12">
-                <img id="mainImg" v-bind:src="currentImage" class="col-12">
-                <ul id="caption" class="col-md-12">
-                    <li v-for="part in caption" v-bind:class="{active: part.active}">{{ part.text }}</li>
-                    <!-- <li>ma</li>
+            <ul id="caption">
+                <li v-for="part in caption" v-bind:class="{active: part.active}">{{ part.text }}</li>
+                <!-- <li>ma</li>
                     <li class="active">ta</li>
                     <li>ha</li>
                     <li>ri</li> -->
-                </ul>
-                <button id="btnChangeImage" class="btn btn-lg btn-primary" v-on:click="changeImage()" disabled="true"><i
-                        class="fa fa-refresh"></i>
-                    Ganti</button>
+            </ul>
+        </div>
+        <div class="row">
+            <div id="btnGroup">
                 <button id="btnReadCaption" class="btn btn-lg btn-primary" v-on:click="readCaption()" disabled="true"><i
-                        class="fa fa-volume-up"></i>
-                    Baca</button>
+                        class="fa fa-volume-up"></i> Baca
+                </button>
+                <button id="btnChangeImage" class="btn btn-lg btn-primary" v-on:click="changeImage()" disabled="true"><i
+                        class="fa fa-refresh"></i> Ganti
+                </button>
             </div>
+        </div>
+        <div class="row">
+            <transition name="fade">
+                <img id="mainImg" v-bind:src="currentImage" v-if="imageShown">
+            </transition>
         </div>
     </div>
 

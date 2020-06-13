@@ -55,6 +55,7 @@ var app = new Vue({
                 "active": false
             },
         ],
+        imageShown: false,
         data: [
             {
                 "image": "assets/images/api.jpg",
@@ -124,10 +125,12 @@ var app = new Vue({
             // set active image & caption
             this.currentImage = this.data[index].image;
             this.caption = captionParts;
+            this.imageShown = false;
             // enable button again
             setButtonDisabled(false);
         },
         async readCaption() {
+            var self = this;
             // disable button
             setButtonDisabled(true);
             // read caption part by part
@@ -142,6 +145,7 @@ var app = new Vue({
                     part.text,
                     function () {
                         part.active = true;
+                        self.imageShown = true;
                     },
                     function () {
                         part.active = false;
